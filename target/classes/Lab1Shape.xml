@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="shape.properties"/>
+
+    <bean id="coords" class="Lab1.Coords"
+          scope="prototype"/>
+
+    <bean id="myPoint" class="Lab1.Point"
+          scope="prototype">
+        <constructor-arg ref="coords"/>
+        <property name="color" value="${point.color}"/>
+        <property name="x" value="${point.x}"/>
+        <property name="y" value="${point.y}"/>
+    </bean>
+    <bean id="myCircle" class="Lab1.Circle"
+          scope="prototype">
+        <constructor-arg name="center" ref="coords"/>
+        <constructor-arg index="1" value="${circle.radius}"/>
+        <property name="color" value="${circle.color}"/>
+        <property name="x" value="${circle.x}"/>
+        <property name="y" value="${circle.y}"/>
+    </bean>
+</beans>
