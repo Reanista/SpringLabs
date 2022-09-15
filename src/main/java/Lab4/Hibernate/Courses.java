@@ -7,7 +7,7 @@ import static javax.persistence.GenerationType.IDENTITY; // Генерация �
 
 
 @Entity // превращает класс в класс-сущности
-@Table // связывает класс-сущности с таблицей в MySQL
+@Table(name="courses") // связывает класс-сущности с таблицей в MySQL
 public class Courses implements Serializable {
     private int id;
     private String title;

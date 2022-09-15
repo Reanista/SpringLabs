@@ -2,6 +2,7 @@ package Lab4.Hibernate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,11 +23,15 @@ import java.util.List;
 @Repository("courseDAO")
 public class HibernateCourseDAO implements CourseDAO {
     private static final Log LOG = LogFactory.getLog(HibernateCourseDAO.class);
+@Autowired //заработало только тогда, когда навесила здесь @Autowired, до этого getSessionFactory() возвращал null,
+// при том, что была аннотация Resource (name = "sessionFactory")
     SessionFactory sessionFactory ;
+
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
+
 
     // //DependencyInjection - связывается с бином sessionFactory, сконфиг-м в xml.
     // Можно использовать @Autowire, тк наименования бина сходится с конфигурацией. Resource из javax.annotation
@@ -45,28 +50,26 @@ public class HibernateCourseDAO implements CourseDAO {
     @Override
     @Transactional(readOnly = true)
     public List<Courses> findAll(){
-        return getSessionFactory().getCurrentSession().createQuery("from Course c").list(); //HQL
+        return getSessionFactory().getCurrentSession().createQuery("from Courses c").list(); //HQL
 
     }
     @Override
     public List<Courses> findByTitle(String title){
-        return getSessionFactory().getCurrentSession().createQuery("from Course c where c.title like :title")
+        return getSessionFactory().getCurrentSession().createQuery("from Courses c where c.title like :title")
                 .setParameter("title", "%" + title.trim() + "%").list(); //HQ
-
-
     }
 
     @Override
     public void insert(Courses courses){
         getSessionFactory().getCurrentSession().save(courses);
-        LOG.info("Course saved with id: " + courses.getId()); //автоматически обновится значение ID за счет аннотации @GeneratedValue
+        LOG.info("Courses saved with id: " + courses.getId()); //автоматически обновится значение ID за счет аннотации @GeneratedValue
     }
 
     @Override
 
     public void update(Courses courses){
         getSessionFactory().getCurrentSession().update(courses);
-        LOG.info("Course updated with id: " + courses.getId());
+        LOG.info("Courses updated with id: " + courses.getId());
     }
     @Override
     public void delete(int id){
@@ -74,8 +77,11 @@ public class HibernateCourseDAO implements CourseDAO {
         c.setId(id);
         getSessionFactory().getCurrentSession().delete(c); // так как принимает в качестве параметра не ID, а объект, необходимо создать
         // объект, в который вложим ID записи, которбу хотим удалить
-        LOG.info("Course deleted with id: " + c.getId());
+        LOG.info("Courses deleted with id: " + c.getId());
     }
+
+
+
 
 
 }

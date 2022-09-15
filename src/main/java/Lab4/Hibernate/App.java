@@ -9,36 +9,43 @@ public class App {
         CourseDAO courseDAO = context.getBean(CourseDAO.class);
 
         // --- Delete
+
         //courseDAO.delete(8);
 
         // --- Update
-        /*
-        Courses s = courseDAO.findById(8);
+/*
+        Courses s = courseDAO.findById(11);
         s.setLength(54);
-        courseDAO.update(s); */
+        courseDAO.update(s);
+        System.out.println(s);
+*/
 
-
-        //--- Insert
+        // --- Insert
 /*
         Courses courses = new Courses();
-        courses.setTitle("Spring");
-        courses.setDescription("Spring framework");
-        courses.setLength(40);
+        courses.setTitle("Hibernate");
+        courses.setDescription("ORM");
+        courses.setLength(23);
         System.out.println(courses);
         courseDAO.insert(courses);
-        System.out.println(courses); */
+        System.out.println(courses);
+*/
 
         //--- Find by Title
-
-        //for(Courses c : courseDAO.findByTitle("Web")){
-        //    System.out.println(c);}
-
+/*
+        for(Courses c : courseDAO.findByTitle("Web")){
+           System.out.println(c);}
+*/
         //--- Find All
 
         for(Courses c : courseDAO.findAll()){
             System.out.println(c);}
-        //System.out.printf("Курс: %s\n", courseDAO.findById(4));
-        context.close();
+
+
+        // --- Find by ID
+        /*
+        System.out.printf("Курс: %s\n", courseDAO.findById(4));
+        context.close(); */
 
     }
 }
